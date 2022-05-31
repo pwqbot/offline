@@ -1,8 +1,10 @@
 #! /bin/bash
 mkdir -p ~/.fonts
-unzip *.zip -d ~/.fonts
 
-echo "install fonts"
+echo -e "\nunzip fonts\n"
+unzip '*.zip' -d ~/.fonts
+
+echo -e "\ninstall fonts\n"
 fc-cache -fv
 
-echo "success! use fc-list to list all fonts"
+echo -e "\nsuccess! use fc-list to list all fonts"
