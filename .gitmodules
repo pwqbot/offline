@@ -1,3 +1,0 @@
-[submodule "nvim.lua"]
-	path = nvim.lua
-	url = https://github.com/pwqbot/nvim.lua.git
