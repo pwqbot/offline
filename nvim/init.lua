@@ -1,0 +1,7 @@
+require('plugins/plugins')
+require('keymap/common')
+require('keymap/plugin')
+require('keymap/toggle_term')
+require('settings')
+require('theme')
+require('auto_command')
