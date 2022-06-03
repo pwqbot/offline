@@ -150,6 +150,7 @@ that config. This file is accessible in neovim via `:help lspconfig-server-confi
 - [vls](#vls)
 - [volar](#volar)
 - [vuels](#vuels)
+- [wgsl_analyzer](#wgsl_analyzer)
 - [yamlls](#yamlls)
 - [zeta_note](#zeta_note)
 - [zk](#zk)
@@ -2175,12 +2176,12 @@ require'lspconfig'.gradle_ls.setup{}
 
 ## grammarly
 
-https://github.com/emacs-grammarly/unofficial-grammarly-language-server
+https://github.com/znck/grammarly
 
-`unofficial-grammarly-language-server` can be installed via `npm`:
+`grammarly-languageserver` can be installed via `npm`:
 
 ```sh
-npm i -g @emacs-grammarly/unofficial-grammarly-language-server
+npm i -g grammarly-languageserver
 ```
 
 WARNING: Since this language server uses Grammarly's API, any document you open with it running is shared with them. Please evaluate their [privacy policy](https://www.grammarly.com/privacy-policy) before using this.
@@ -2196,7 +2197,7 @@ require'lspconfig'.grammarly.setup{}
 **Default values:**
   - `cmd` : 
   ```lua
-  { "unofficial-grammarly-language-server", "--stdio" }
+  { "grammarly-languageserver", "--stdio" }
   ```
   - `filetypes` : 
   ```lua
@@ -2249,7 +2250,7 @@ require'lspconfig'.graphql.setup{}
   ```
   - `root_dir` : 
   ```lua
-  root_pattern('.git', '.graphqlrc*', '.graphql.config.*')
+  util.root_pattern('.git', '.graphqlrc*', '.graphql.config.*', 'graphql.config.*')
   ```
 
 
@@ -6487,6 +6488,42 @@ require'lspconfig'.vuels.setup{}
   - `root_dir` : 
   ```lua
   root_pattern("package.json", "vue.config.js")
+  ```
+
+
+## wgsl_analyzer
+
+https://github.com/wgsl-analyzer/wgsl-analyzer
+
+`wgsl_analyzer` can be installed via `cargo`:
+```sh
+cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl_analyzer
+```
+
+
+
+**Snippet to enable the language server:**
+```lua
+require'lspconfig'.wgsl_analyzer.setup{}
+```
+
+
+**Default values:**
+  - `cmd` : 
+  ```lua
+  { "wgsl_analyzer" }
+  ```
+  - `filetypes` : 
+  ```lua
+  { "wgsl" }
+  ```
+  - `root_dir` : 
+  ```lua
+  root_pattern(".git"
+  ```
+  - `settings` : 
+  ```lua
+  {}
   ```
 
 
