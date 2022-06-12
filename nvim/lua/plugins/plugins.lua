@@ -6,7 +6,9 @@ local packer_path = packer_start_path .. '/packer.nvim'
 local packer_bootstrap
 if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
     print("install packer")
-    packer_bootstrap = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', packer_path })
+    packer_bootstrap = vim.fn.system({
+        'git', 'clone', '--depth', '1',
+        'https://github.com/wbthomason/packer.nvim', packer_path })
 end
 
 vim.opt.runtimepath:append(packer_start_path .. '/*')
@@ -19,11 +21,12 @@ require('packer').init({
     },
     display = {
         open_fn = function()
-            return require("packer.util").float { border = "rounded" }
+            return require("packer.util").float { border = 'rounded' }
         end,
     },
 })
 
+vim.g.sandwich_no_default_key_mappings = 1
 require('packer').startup(
     function(use)
         --- packer itself ---
@@ -72,7 +75,10 @@ require('packer').startup(
             'phaazon/hop.nvim',
             branch = 'v1', -- optional but strongly recommended
             config = function()
-                require 'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+                require 'hop'.setup {
+                    keys = 'etovxqpdygfblzhckisuran',
+                    multi_windows = true,
+                }
             end
         }
 
@@ -81,6 +87,37 @@ require('packer').startup(
             "folke/which-key.nvim",
             config = function()
                 require 'plugins/config/which-key'
+            end
+        }
+
+        -- CTRL-T to toggleterminal
+        use {
+            "akinsho/toggleterm.nvim",
+            tag = 'v1.*',
+            config = function()
+                require 'plugins/config/toggle'
+            end
+        }
+
+        use { 'machakann/vim-sandwich',
+            config = function()
+                vim.cmd([[
+                    runtime macros/sandwich/keymap/surround.vim
+
+                    xmap is <Plug>(textobj-sandwich-aubo-i)
+                    xmap as <Plug>(textobj-sandwich-auto-a)
+                    omap is <Plug>(textobj-sandwich-auto-i)
+                    omap as <Plug>(textobj-sandwich-auto-a)
+                ]]
+                )
+            end
+        }
+
+        --- auto pairs
+        use {
+            'windwp/nvim-autopairs',
+            config = function()
+                require 'plugins/config/autopairs'
             end
         }
         ----------------------------- file ---------------------------
@@ -94,6 +131,11 @@ require('packer').startup(
                 'nvim/lua/plenary.nvim',
             },
         }
+        use {
+            'nvim-telescope/telescope-fzf-native.nvim',
+            run = 'make'
+        }
+
 
         -- <F1> open file explorer
         use {
@@ -127,6 +169,20 @@ require('packer').startup(
                 require 'plugins/config/textobj'
             end
         }
+        use {
+            'nvim-treesitter/nvim-treesitter-context',
+            config = function()
+                require 'plugins/config/context'
+            end
+        }
+        -- show position in code in status line
+        use {
+            'SmiteshP/nvim-gps',
+            requires = 'nvim-treesitter/nvim-treesitter',
+            config = function()
+                require("nvim-gps").setup()
+            end
+        }
 
         use {
             'stevearc/aerial.nvim',
@@ -142,14 +198,22 @@ require('packer').startup(
                 require 'plugins/config/comment'
             end,
         }
+
         -- --------------------------- beautify ----------------------------
         -- theme
         use "EdenEast/nightfox.nvim"
+        use "sainnhe/everforest"
+        use({
+            "catppuccin/nvim",
+            as = "catppuccin"
+        })
+        use 'navarasu/onedark.nvim'
+
 
         --  icon
         use 'kyazdani42/nvim-web-devicons'
 
-        -- status line
+        -- stcatus line
         use {
             'nvim-lualine/lualine.nvim',
             requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -158,23 +222,11 @@ require('packer').startup(
             end,
         }
 
-        -- show position in code in status line
         use {
-            "SmiteshP/nvim-gps",
-            requires = "nvim-treesitter/nvim-treesitter",
+            "lukas-reineke/indent-blankline.nvim",
             config = function()
-                require("nvim-gps").setup()
+                require 'plugins/config/indent'
             end
-        }
-
-        -- buffer line beautify
-        use {
-            'akinsho/bufferline.nvim',
-            tag = "v2.*",
-            config = function()
-                require 'plugins/config/bufferline'
-            end,
-            requires = 'kyazdani42/nvim-web-devicons',
         }
 
         -- start up
@@ -219,8 +271,8 @@ require('packer').startup(
 
         -- <leader>t to open lsp diagnostic
         use {
-            "folke/trouble.nvim",
-            requires = "kyazdani42/nvim-web-devicons",
+            'folke/trouble.nvim',
+            requires = 'kyazdani42/nvim-web-devicons',
             config = function()
                 require 'plugins/config/trouble'
             end,

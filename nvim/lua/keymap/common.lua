@@ -8,6 +8,9 @@ map('n', '<C-q>', '<cmd>qa<cr>')
 --- cycle through tab ---
 map('n', '<M-j>', 'gT')
 map('n', '<M-k>', 'gt')
+-- map('n', '<leader>nt', '<Cmd>tabnew<CR>')
+map('n', '<leader>ct', '<Cmd>tabclose<CR>')
+map('n', '<leader>cb', '<Cmd>bd<CR>')
 
 --- line move ---
 map({ 'n', 'v' }, 'H', '^')
@@ -42,3 +45,6 @@ map('i', '<C-A>', '<Home>')
 map('i', '<C-E>', '<End>')
 map('i', '<C-F>', '<Right>')
 map('i', '<C-B>', '<Left>')
+
+map('n', '<leader>sc',
+    [[:execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")<CR>]])

@@ -3,7 +3,7 @@ local function map(mode, shortcut, command)
 end
 
 --- file tree ---
-map({ 't', 'n' }, '<F1>', '<cmd>NvimTreeFindFileToggle<CR>')
+map({ 't', 'n', 'i' }, '<F1>', '<cmd>NvimTreeFindFileToggle<CR>')
 
 --- git ---
 map('n', '<F2>', '<cmd>Neogit<CR>')
@@ -14,7 +14,7 @@ map('n', '<F4>', function() require('telescope.builtin').find_files { cwd = "~",
 map('n', '<C-p>', function() require('telescope.builtin').find_files { hidden = true } end)
 map('n', '<C-n>', function() require('telescope.builtin').buffers { sort_mru = true } end)
 map('n', '<leader>fo', function() require('telescope.builtin').oldfiles() end)
-map('n', '<leader>fg', function() require('telescope.builtin').live_grep() end)
+map('n', '<leader>fg', function() require('telescope.builtin').grep_string() end)
 map('n', '<leader>fs', function() require('telescope.builtin').lsp_document_symbols {} end)
 map('n', '<leader>fa', function() require('telescope.builtin').lsp_dynamic_workspace_symbols {} end)
 
@@ -28,6 +28,4 @@ map('x', '<C-_>',
 )
 
 --- quick motion ---
-map('n', 'f', function()
-    require 'hop'.hint_words({})
-end)
+map('n', 'f', function() require 'hop'.hint_words({}) end)

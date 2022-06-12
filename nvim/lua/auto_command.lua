@@ -6,7 +6,8 @@ vim.api.nvim_create_autocmd(
     { "BufReadPost" },
     {
         group = buf_group,
-        command = [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]],
+        command = [[if line("'\"") > 1 && line("'\"") <= line("$") 
+        | execute "normal! g`\"" | endif]],
     }
 )
 
@@ -16,7 +17,9 @@ vim.api.nvim_create_autocmd(
     {
         group = yank_group,
         callback = function()
-            require('vim.highlight').on_yank({ higroup = 'DiffText', timeout = 300 })
+            require('vim.highlight').on_yank({
+                higroup = 'DiffText', timeout = 300,
+            })
         end,
     }
 )
@@ -54,7 +57,7 @@ vim.api.nvim_create_autocmd(
     { "FileType" },
     {
         group = quick_exit_group,
-        pattern = { "qf,help,man" },
+        pattern = { "qf,help,man,checkhealth" },
         callback = function()
             vim.keymap.set('n', 'q', "<cmd>close<cr>",
                 { silent = true, buffer = true })
@@ -77,7 +80,7 @@ vim.api.nvim_create_autocmd(
     { "FileType" },
     {
         group = lsp_group,
-        pattern = { "*" },
+        pattern = { "lspinfo" },
         callback = function()
             vim.keymap.set('n', 'q', "<cmd>close<cr>",
                 { silent = true, buffer = true })
