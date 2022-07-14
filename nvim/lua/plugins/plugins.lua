@@ -26,7 +26,6 @@ require('packer').init({
     },
 })
 
-vim.g.sandwich_no_default_key_mappings = 1
 require('packer').startup(
     function(use)
         --- packer itself ---
@@ -37,19 +36,6 @@ require('packer').startup(
             'lewis6991/gitsigns.nvim',
             config = function()
                 require 'plugins/config/gitsign'
-            end
-        }
-
-        --- F2 ---
-        use {
-            'TimUntersberger/neogit',
-            requires = {
-                'nvim-lua/plenary.nvim',
-                'sindrets/diffview.nvim',
-            },
-            config = function()
-                require 'plugins/config/neogit'
-                require 'plugins/config/diffview'
             end
         }
 
@@ -68,19 +54,13 @@ require('packer').startup(
         -- quickfix window preview
         use {
             'kevinhwang91/nvim-bqf',
+            config = function()
+                require 'plugins/config/bqf'
+            end
         }
 
         -- fast motion
-        use {
-            'phaazon/hop.nvim',
-            branch = 'v1', -- optional but strongly recommended
-            config = function()
-                require 'hop'.setup {
-                    keys = 'etovxqpdygfblzhckisuran',
-                    multi_windows = true,
-                }
-            end
-        }
+        use 'ggandor/lightspeed.nvim'
 
         -- show key hint
         use {
@@ -89,27 +69,12 @@ require('packer').startup(
                 require 'plugins/config/which-key'
             end
         }
-
         -- CTRL-T to toggleterminal
         use {
             "akinsho/toggleterm.nvim",
             tag = 'v1.*',
             config = function()
                 require 'plugins/config/toggle'
-            end
-        }
-
-        use { 'machakann/vim-sandwich',
-            config = function()
-                vim.cmd([[
-                    runtime macros/sandwich/keymap/surround.vim
-
-                    xmap is <Plug>(textobj-sandwich-aubo-i)
-                    xmap as <Plug>(textobj-sandwich-auto-a)
-                    omap is <Plug>(textobj-sandwich-auto-i)
-                    omap as <Plug>(textobj-sandwich-auto-a)
-                ]]
-                )
             end
         }
 
@@ -120,6 +85,12 @@ require('packer').startup(
                 require 'plugins/config/autopairs'
             end
         }
+
+        use {
+            'gcmt/wildfire.vim',
+            config = function()
+            end
+        }
         ----------------------------- file ---------------------------
         -- fuzzy finder, see keymap in keymap/plugin.lua
         use {
@@ -128,7 +99,7 @@ require('packer').startup(
                 require 'plugins/config/tele'
             end,
             requires = {
-                'nvim/lua/plenary.nvim',
+                'nvim-lua/plenary.nvim',
             },
         }
         use {
@@ -154,6 +125,16 @@ require('packer').startup(
             "ahmedkhalf/project.nvim",
             config = function()
                 require("project_nvim").setup()
+            end
+        }
+
+        -- Lua
+        use {
+            "folke/todo-comments.nvim",
+            requires = "nvim-lua/plenary.nvim",
+            config = function()
+                require("todo-comments").setup {
+                }
             end
         }
         -- --------------------------- code ------------------------------
@@ -199,6 +180,14 @@ require('packer').startup(
             end,
         }
 
+        use {
+            'xeluxee/competitest.nvim',
+            requires = 'MunifTanjim/nui.nvim',
+            config = function()
+                require 'competitest'.setup()
+            end
+        }
+
         -- --------------------------- beautify ----------------------------
         -- theme
         use "EdenEast/nightfox.nvim"
@@ -220,13 +209,6 @@ require('packer').startup(
             config = function()
                 require 'plugins/config/lualine'
             end,
-        }
-
-        use {
-            "lukas-reineke/indent-blankline.nvim",
-            config = function()
-                require 'plugins/config/indent'
-            end
         }
 
         -- start up
